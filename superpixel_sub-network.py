@@ -11,7 +11,7 @@ class GCNLayer(nn.Module):
         self.BN = nn.BatchNorm1d(input_dim)
         self.Activition = nn.LeakyReLU()
         self.sigma1= torch.nn.Parameter(torch.tensor([0.1],requires_grad=True))
-        # 第一层GCN
+        # first layer GCN
         self.GCN_liner_theta_1 =nn.Sequential(nn.Linear(input_dim, 256))
         self.GCN_liner_out_1 =nn.Sequential( nn.Linear(input_dim, output_dim))
         nodes_count=self.A.shape[0]
@@ -25,7 +25,7 @@ class GCNLayer(nn.Module):
         return D_hat
     
     def forward(self, H, model='normal'):
-        # # 方案一：minmax归一化
+        # # minmax 
         # H = self.BN(H)
         # H_xx1= self.GCN_liner_theta_1(H)
         # A = torch.clamp(torch.sigmoid(torch.matmul(H_xx1, H_xx1.t())), min=0.1) * self.mask + self.I
@@ -35,7 +35,7 @@ class GCNLayer(nn.Module):
         # output = torch.mm(A_hat, self.GCN_liner_out_1(H))
         # output = self.Activition(output)
         
-        # # 方案二：softmax归一化 (加速运算)
+        # # ：softmax
         H = self.BN(H)
         H_xx1= self.GCN_liner_theta_1(H)
         e = torch.sigmoid(torch.matmul(H_xx1, H_xx1.t()))
