@@ -14,7 +14,10 @@ import numpy as np
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # Configuration
-DATASET_PATH = "/Users/a981199/Downloads/test_images"  # Update this path
+
+#update this path 
+DATASET_PATH = "/Users/a981199/Downloads/test_images"  
+#you can change all the parameters to see the performance
 NUM_SUPERPIXELS = 20
 COMPACTNESS = 20
 HEIGHT, WIDTH, CHANNELS = 224, 224, 3
